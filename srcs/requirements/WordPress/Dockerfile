@@ -47,9 +47,9 @@ RUN		mv wp-cli.phar /usr/local/bin/wp
 # ---- Import Website files ---- #
 # ====================== #
 
-COPY	index.html /index.html
+COPY	/website/index.html /index.html
 RUN		chmod +x /index.html
-COPY	index.css /index.css
+COPY	/website/index.css /index.css
 RUN		chmod +x /index.css
 
 # ---- Entrypoint Script ---- #
