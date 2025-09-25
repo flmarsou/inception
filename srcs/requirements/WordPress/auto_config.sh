@@ -13,5 +13,8 @@ if [ ! -f "/wp-config.php" ]; then
 		--dbhost=mariadb:3306 --path='/var/www/wordpress'
 fi
 
+cd /website/index.html /var/www/wordpress/index.html
+cd /website/index.css /var/www/wordpress/index.css
+
 echo "[ INFO ] Running "
 exec php-fpm84 -F
