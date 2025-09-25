@@ -17,5 +17,39 @@ services:
         expose:
             - "3306"
 
+    wordpress:
+        container_name: wordpress
+        build:
+            context: requirements/WordPress
+            dockerfile: Dockerfile
+        depends_on:
+            - mariadb
+        env_file:
+            - .env
+        environment:
+            - WORDPRESS_HOST
+            - WORDPRESS_NAME
+            - WORDPRESS_USER
+            - WORDPRESS_PASSWORD
+        volumes:
+            - wordpress:/var/www/wordpress
+        restart: unless-stopped
+        expose:
+            - "9000"
+
+    nginx:
+        container_name: nginx
+        build:
+            context: requirements/NGINX
+            dockerfile: Dockerfile
+        depends_on:
+            - wordpress
+        volumes:
+            - wordpress:/var/www/wordpress:ro
+        ports:
+            - "443:443"
+        restart: unless-stopped
+
 volumes:
     mariadb:
+    wordpress:
