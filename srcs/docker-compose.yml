@@ -19,8 +19,34 @@ services:
         networks:
             - networkInception
 
+    wordpress:
+        container_name: wordpress
+        build:
+            context: requirements/WordPress
+            dockerfile: Dockerfile
+        depends_on:
+            - mariadb
+        env_file:
+            - .env
+        environment:
+            - WORDPRESS_URL
+            - WORDPRESS_ADMIN_USER
+            - WORDPRESS_ADMIN_PASS
+            - WORDPRESS_ADMIN_EMAIL
+            - WORDPRESS_USER
+            - WORDPRESS_USER_PASS
+            - WORDPRESS_USER_EMAIL
+        volumes:
+            - wordpress:/var/www/html
+        restart: unless-stopped
+        expose:
+            - "9000"
+        networks:
+            - networkInception
+
 volumes:
     mariadb:
+    wordpress:
 
 networks:
     networkInception:
