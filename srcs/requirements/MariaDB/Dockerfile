@@ -1,5 +1,7 @@
 FROM	alpine:3.22
 
+EXPOSE	3306
+
 # Install MariaDB
 RUN		apk update && apk upgrade && apk add --no-cache \
 			mariadb \
@@ -11,7 +13,7 @@ RUN		mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 # Copy custom MariaDB configuration file
 COPY	my.cnf /etc/my.cnf
 
-# Copy and execute the auto-configuration script
+# Copy and execute the auto-configuration script and set permissions
 COPY	entrypoint.sh /entrypoint.sh
 RUN     chmod +x /entrypoint.sh
 
