@@ -44,6 +44,21 @@ services:
         networks:
             - networkInception
 
+    nginx:
+        container_name: nginx
+        build:
+            context: requirements/NGINX
+            dockerfile: Dockerfile
+        depends_on:
+            - wordpress
+        volumes:
+            - wordpress:/var/www/html:ro
+        ports:
+            - "443:443"
+        restart: unless-stopped
+        networks:
+            - networkInception
+
 volumes:
     mariadb:
     wordpress:
