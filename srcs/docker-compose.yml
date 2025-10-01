@@ -1,0 +1,27 @@
+services:
+    mariadb:
+        container_name: mariadb
+        build:
+            context: requirements/MariaDB
+            dockerfile: Dockerfile
+        env_file:
+            - .env
+        environment:
+            - SQL_DATABASE
+            - SQL_USER
+            - SQL_PASSWORD
+            - SQL_ROOT_PASSWORD
+        volumes:
+            - mariadb:/var/lib/mysql
+        restart: unless-stopped
+        expose:
+            - "3306"
+        networks:
+            - networkInception
+
+volumes:
+    mariadb:
+
+networks:
+    networkInception:
+        driver: bridge
