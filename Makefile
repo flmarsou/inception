@@ -5,10 +5,14 @@ PROJECT_NAME	:= inception
 # ======================== #
 
 up:
+		mkdir -p /home/${shell whoami}/data/db_data
+		mkdir -p /home/${shell whoami}/data/wp_data
 		docker-compose -f ${COMPOSE_FILE} -p ${PROJECT_NAME} up -d --build
 
 down:
 		docker-compose -f ${COMPOSE_FILE} -p ${PROJECT_NAME} down -v || true
+
+re: down up
 
 # ---- Debug MariaDB ---- #
 # ======================= #
@@ -22,6 +26,9 @@ mariadb_run:
 mariadb_stop:
 		docker stop mariadb_debug || true
 		docker rm mariadb_debug || true
+
+mariadb_enter:
+		docker exec -it mariadb mysql -u root -p
 
 # ---- Debug WordPress ---- #
 # ========================= #
