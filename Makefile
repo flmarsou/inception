@@ -14,6 +14,22 @@ down:
 
 re: down up
 
+clear:
+	@sudo rm -rf /home/$(shell whoami)/data/db_data
+	@sudo rm -rf /home/$(shell whoami)/data/wp_data
+	@docker system prune -af --volumes
+	@docker volume rm -f srcs_db_data || true
+	@docker volume rm -f srcs_wp_data || true
+
+clean:
+	@docker ps -q -f | xargs -r docker stop
+	@docker ps -a -q -f | xargs -r docker rm
+	@docker images -q -f | xargs -r docker rmi
+	@docker network prune -f
+
+
+fclean: clean clear
+
 # ---- Debug MariaDB ---- #
 # ======================= #
 
