@@ -23,4 +23,7 @@ RUN		getent passwd www-data || adduser -u 82 -D -S -G www-data www-data
 RUN		mkdir -p /var/www/html
 RUN		chown -R www-data:www-data /var/www/html
 
+COPY	index.html /var/www/html
+COPY	index.css /var/www/html
+
 CMD ["nginx", "-g", "daemon off;"]
